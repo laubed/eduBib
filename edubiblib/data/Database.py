@@ -30,11 +30,15 @@ class Database(object):
         """
         cursor = self.connection.cursor()
         cursor.execute("SELECT id, isbn, name, autor, verlag FROM buecher_template WHERE id = '?';", id)
+ 	length = len(cursor)
+	if length = 0:
+		return None
+		
         data = cursor.fetchone()
 
         bookTemplate = BuchTemplate(data[0], data[1], data[2], data[3], data[5])
         cursor.close()
-        return bookTemplate # TODO: Return None if no book template with given id
+        return bookTemplate 
 
     def getMerchant(self, id):
         """
@@ -44,7 +48,11 @@ class Database(object):
         """
         cursor = self.connection.cursor()
         cursor.execute("SELECT id, name, address FROM merchants WHERE id = '?';", id)
+ 	length = len(cursor)
+	if length = 0:
+		return None
+
         data = cursor.fetchone()
 
         merchant = Merchant(data[0], data[1], data[2])
-        return merchant # TODO: Return None if no merchant with given id
+        return merchant 
