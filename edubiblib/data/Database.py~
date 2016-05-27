@@ -22,14 +22,14 @@ class Database(object):
         # TODO: Implement!
         pass
 
-    def getBookTemplate(self, id_):
+    def getBookTemplate(self, id):
         """
         Returns a book template from the database.
         :param id:  int - the book template id
         :return: if found: book template with the specified id, else None
         """
         cursor = self.connection.cursor()
-        cursor.execute("SELECT id, isbn, name, autor, verlag FROM buecher_template WHERE id = '?';", id_)
+        cursor.execute("SELECT id, isbn, name, autor, verlag FROM buecher_template WHERE id = '?';", id)
  	length = len(cursor)
 	if length = 0:
 		return None
@@ -38,16 +38,16 @@ class Database(object):
 
         bookTemplate = BookTemplate(data[0], data[1], data[2], data[3], data[4])
         cursor.close()
-        return bookTemplate
+        return bookTemplate 
 
-    def getMerchant(self, id_):
+    def getMerchant(self, id):
         """
         Returns a merchant with given id
         :param id: int - the id to search for
         :return: if found: merchant with specific id, else None
         """
         cursor = self.connection.cursor()
-        cursor.execute("SELECT id, name, address FROM merchants WHERE id = '?';", id_)
+        cursor.execute("SELECT id, name, address FROM merchants WHERE id = '?';", id)
  	length = len(cursor)
 	if length = 0:
 		return None
@@ -56,16 +56,3 @@ class Database(object):
 
         merchant = Merchant(data[0], data[1], data[2])
         return merchant 
-
-    def getPerson(self, id_):
-	cursor = self.connection.cursor()
-	cursor.execute("SELECT id, name, klasse FROM persons WHERE id = '?'", id_)
-	length = len(cursor)
-	if length == 0:
-	    return None
-
-        data = cursor.fetchone()
-	person = Person(data[0], data[1], data[2])
-	return person 
-	
-	
