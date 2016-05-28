@@ -54,8 +54,6 @@ class Database(object):
             self.connection.commit()
         # TODO: Do the other tables
 
-
-
     def getBookTemplate(self, id):
         """
         Returns a book template from the database.
@@ -64,6 +62,10 @@ class Database(object):
         """
         cursor = self.connection.cursor()
         cursor.execute("SELECT id, isbn, name, author, publisher FROM book_template WHERE id = '?';", id)
+        length = len(cursor)
+        if length == 0:
+            return None
+
         data = cursor.fetchone()
 
         bookTemplate = BuchTemplate(data[0], data[1], data[2], data[3], data[5])
@@ -78,6 +80,10 @@ class Database(object):
         """
         cursor = self.connection.cursor()
         cursor.execute("SELECT id, name, address FROM merchants WHERE id = '?';", id)
+        length = len(cursor)
+        if length == 0:
+            return None
+
         data = cursor.fetchone()
 
         merchant = Merchant(data[0], data[1], data[2])
