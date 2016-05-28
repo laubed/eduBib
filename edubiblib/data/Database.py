@@ -123,5 +123,9 @@ class Database(object):
         if template == None:
             print "book with none existing book_template in database..."
             return None
-        book = Book(data[0], template, data[2])
+        borrowed_by = data[2]
+        if borrowed_by != None:
+            borrowed_by = self.getPerson(borrowed_by)
+
+        book = Book(data[0], template, borrowed_by)
         return book
