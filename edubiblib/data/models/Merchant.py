@@ -26,7 +26,7 @@ class Merchant(object):
         """
         return self._name
 
-    def getAdress(self):
+    def getAddress(self):
         """
         Getter for address
         :return: returns merchant adress

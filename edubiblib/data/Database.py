@@ -19,8 +19,42 @@ class Database(object):
         """
         Check all tables. Create them of they dont exist.
         """
-        # TODO: Implement!
-        pass
+        cursor = self.connection.cursor()
+        ### Check book_template table
+        try:
+            cursor.execute("SELECT 1 FROM book_template LIMIT 1");
+        except:
+            print "book_template does not exist. Create it."
+            self.connection.commit()
+            cursor.execute("CREATE TABLE book_template (id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, isbn STRING, name STRING, author STRING, publisher STRING)")
+            self.connection.commit()
+
+        try:
+            cursor.execute("SELECT 1 FROM books LIMIT 1");
+        except:
+            print "books does not exist. Create it."
+            self.connection.commit()
+            cursor.execute("CREATE TABLE books (id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, template_id INTEGER, borrowed_by INTEGER)")
+            self.connection.commit()
+
+        try:
+            cursor.execute("SELECT 1 FROM merchants LIMIT 1")
+        except:
+            print "merchants does not exist. Create it."
+            self.connection.commit()
+            cursor.execute("CREATE TABLE merchants (id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, name STRING, address STRING)")
+            self.connection.commit();
+
+        try:
+            cursor.execute("SELECT 1 FROM persons LIMIT 1")
+        except:
+            print "persons does not exist. Create it."
+            self.connection.commit()
+            cursor.execute("CREATE TABLE persons (id INTEGER PRIMArY KEY AUTOINCREMENT NOT NULL, name STRING, klasse STRING)")
+            self.connection.commit()
+        # TODO: Do the other tables
+
+
 
     def getBookTemplate(self, id):
         """
@@ -29,7 +63,7 @@ class Database(object):
         :return: if found: book template with the specified id, else None
         """
         cursor = self.connection.cursor()
-        cursor.execute("SELECT id, isbn, name, autor, verlag FROM buecher_template WHERE id = '?';", id)
+        cursor.execute("SELECT id, isbn, name, author, publisher FROM book_template WHERE id = '?';", id)
         data = cursor.fetchone()
 
         bookTemplate = BuchTemplate(data[0], data[1], data[2], data[3], data[5])

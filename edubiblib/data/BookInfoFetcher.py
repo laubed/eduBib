@@ -25,8 +25,7 @@ class BookInfoFetcher(object):
             "subtitle" : raw_info["subtitle"],
             "author" : raw_info["authors"],
             "isbn" : str(isbn),
-            "thumbnail" : raw_info["imageLinks"]["thumbnail"]
-
+            "thumbnail" : raw_info["imageLinks"]["thumbnail"],
             #"publisher" : raw_info["publisher"]
         }
         return info
