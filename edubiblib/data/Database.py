@@ -2,6 +2,7 @@ import sqlite3
 from models.BookTemplate import BookTemplate
 from models.Merchant import Merchant
 from models.Person import Person
+from models.book import Book
 
 class Database(object):
     """
@@ -93,7 +94,7 @@ class Database(object):
         """
         Returns a person with given id
         :param id: int - the id to search for
-        :return: if found: oerson with specific id, else None
+        :return: if found: person with specific id, else None
         """
         cursor = self.connection.cursor()
         cursor.execute("SELECT id, name, class FROM persons WHERE id = '?'", id)
@@ -104,3 +105,23 @@ class Database(object):
         data = cursor.fetchone()
         person = Person(data[0], data[1], data[2])
         return person
+
+    def getBook(self, id):
+        """
+        Returns a book with given id
+        :param id: int the id to search for
+        :return: if found: book with given id, else None
+        """
+        cursor = self.connection.cursor()
+        cursor.execute("SELECT id, template_id, borrowed_by FROM books WHERE id = '?'", id)
+        length = len(cursor)
+        if length == 0:
+            return None
+
+        data = cursor.fetchone()
+        template = self.getBookTemplate(data[1])
+        if template == None:
+            print "book with none existing book_template in database..."
+            return None
+        book = Book(data[0], template, data[2])
+        return book
