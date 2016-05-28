@@ -2,7 +2,7 @@ import sqlite3
 from models.BookTemplate import BookTemplate
 from models.Merchant import Merchant
 from models.Person import Person
-from models.book import Book
+from models.Book import Book
 
 class Database(object):
     """
@@ -13,7 +13,7 @@ class Database(object):
         """
         Constructor, initialize the database connection to a local database
         """
-        self.connection = sqlite3.connection("eduBib.sqlite")
+        self.connection = sqlite3.connect("eduBib.sqlite")
         self.checkTables()
 
     def checkTables(self):
@@ -23,31 +23,42 @@ class Database(object):
         cursor = self.connection.cursor()
         ### Check book_template table
         try:
+            print "Checking book_template table..."
             cursor.execute("SELECT 1 FROM book_template LIMIT 1");
+            print "found."
         except:
             print "book_template does not exist. Create it."
             self.connection.commit()
             cursor.execute("CREATE TABLE book_template (id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, isbn STRING, name STRING, author STRING, publisher STRING)")
             self.connection.commit()
 
+        ### Check books table
         try:
+            print "Checking books table..."
             cursor.execute("SELECT 1 FROM books LIMIT 1");
+            print "found."
         except:
             print "books does not exist. Create it."
             self.connection.commit()
             cursor.execute("CREATE TABLE books (id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, template_id INTEGER, borrowed_by INTEGER)")
             self.connection.commit()
 
+        ### Check merchants table
         try:
+            print "Checking merchants table..."
             cursor.execute("SELECT 1 FROM merchants LIMIT 1")
+            print "found."
         except:
             print "merchants does not exist. Create it."
             self.connection.commit()
             cursor.execute("CREATE TABLE merchants (id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, name STRING, address STRING)")
             self.connection.commit();
 
+        ### Check persons table
         try:
+            print "Checking persons table..."
             cursor.execute("SELECT 1 FROM persons LIMIT 1")
+            print "found."
         except:
             print "persons does not exist. Create it."
             self.connection.commit()
@@ -129,3 +140,6 @@ class Database(object):
 
         book = Book(data[0], template, borrowed_by)
         return book
+
+
+database = Database()

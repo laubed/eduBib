@@ -8,8 +8,10 @@ class Person(object):
 
 	def getID(self):
 		return self._id
+
 	def getName(self):
 		return self._name
+
 	def getClass(self):
 		return self._class
 
