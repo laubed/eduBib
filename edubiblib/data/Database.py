@@ -12,7 +12,7 @@ class Database(object):
         """
         Constructor, initialize the database connection to a local database
         """
-        self.connection = sqlite3.connection("eduBib.sqlite")
+        self.connection = sqlite3.connect("eduBib.sqlite")
         self.checkTables()
 
     def checkTables(self):
@@ -29,6 +29,7 @@ class Database(object):
             cursor.execute("CREATE TABLE book_template (id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, isbn STRING, name STRING, author STRING, publisher STRING)")
             self.connection.commit()
 
+        ### Check books table
         try:
             cursor.execute("SELECT 1 FROM books LIMIT 1");
         except:
@@ -37,6 +38,7 @@ class Database(object):
             cursor.execute("CREATE TABLE books (id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, template_id INTEGER, borrowed_by INTEGER)")
             self.connection.commit()
 
+        ### Check merchants table
         try:
             cursor.execute("SELECT 1 FROM merchants LIMIT 1")
         except:
@@ -45,6 +47,7 @@ class Database(object):
             cursor.execute("CREATE TABLE merchants (id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, name STRING, address STRING)")
             self.connection.commit();
 
+        ### Check persons table
         try:
             cursor.execute("SELECT 1 FROM persons LIMIT 1")
         except:
@@ -52,7 +55,7 @@ class Database(object):
             self.connection.commit()
             cursor.execute("CREATE TABLE persons (id INTEGER PRIMArY KEY AUTOINCREMENT NOT NULL, name STRING, klasse STRING)")
             self.connection.commit()
-        # TODO: Do the other tables
+
 
     def getBookTemplate(self, id):
         """
@@ -88,3 +91,5 @@ class Database(object):
 
         merchant = Merchant(data[0], data[1], data[2])
         return merchant # TODO: Return None if no merchant with given id
+
+database = Database()
