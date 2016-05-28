@@ -5,6 +5,7 @@ eduBib is meant to replace existing educational book borrowing software found in
 
 ## Contributors ##
 - Daniel Laube <github@dlaube.de> <bitbucket@dlaube.de>
+- Ben Möbius <benkenan@gmx.de>
 
 ## Credit ##
 * Icons used in logo and graphics: [Octicons by Github](https://octicons.github.com/)

@@ -1,7 +1,7 @@
 import sqlite3
 from models.BookTemplate import BookTemplate
 from models.Merchant import Merchant
-
+from models.Person import Person
 
 class Database(object):
     """
@@ -50,7 +50,7 @@ class Database(object):
         except:
             print "persons does not exist. Create it."
             self.connection.commit()
-            cursor.execute("CREATE TABLE persons (id INTEGER PRIMArY KEY AUTOINCREMENT NOT NULL, name STRING, klasse STRING)")
+            cursor.execute("CREATE TABLE persons (id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, name STRING, class STRING)")
             self.connection.commit()
         # TODO: Do the other tables
 
@@ -68,9 +68,9 @@ class Database(object):
 
         data = cursor.fetchone()
 
-        bookTemplate = BuchTemplate(data[0], data[1], data[2], data[3], data[5])
+        bookTemplate = BookTemplate(data[0], data[1], data[2], data[3], data[5])
         cursor.close()
-        return bookTemplate # TODO: Return None if no book template with given id
+        return bookTemplate
 
     def getMerchant(self, id):
         """
@@ -87,4 +87,20 @@ class Database(object):
         data = cursor.fetchone()
 
         merchant = Merchant(data[0], data[1], data[2])
-        return merchant # TODO: Return None if no merchant with given id
+        return merchant
+
+    def getPerson(self, id):
+        """
+        Returns a person with given id
+        :param id: int - the id to search for
+        :return: if found: oerson with specific id, else None
+        """
+        cursor = self.connection.cursor()
+        cursor.execute("SELECT id, name, class FROM persons WHERE id = '?'", id)
+        length = len(cursor)
+        if length == 0:
+            return None
+
+        data = cursor.fetchone()
+        person = Person(data[0], data[1], data[2])
+        return person
