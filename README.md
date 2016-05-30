@@ -1,4 +1,4 @@
-![eduBib Logo](https://github.com/laubed/eduBib/blob/master/misc/Header.png)
+![eduBib Logo](https://github.com/laubed/eduBib/blob/master/misc/splash.png)
 
 ## What is eduBib ##
 eduBib is meant to replace existing educational book borrowing software found in many schools. You can keep track of all books in your inventory, manage borrowing sheets, buy additional books through merchants. Fully compatible with barcode scanners it is easy to manage all your books.
