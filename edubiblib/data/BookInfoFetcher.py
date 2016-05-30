@@ -19,15 +19,16 @@ class BookInfoFetcher(object):
         raw_data = urllib2.urlopen(url=self.url % (str(isbn),)).read()
         json_data = json.loads(raw_data)
         raw_info = json_data["items"][0]["volumeInfo"]
-        #print raw_info
         info = {
             "title" : raw_info["title"],
             "subtitle" : raw_info["subtitle"],
-            "author" : raw_info["authors"],
+            "author" : ", ".join(raw_info["authors"]),
             "isbn" : str(isbn),
             "thumbnail" : raw_info["imageLinks"]["thumbnail"],
-            #"publisher" : raw_info["publisher"]
         }
+        if raw_info.has_key("publisher"):
+            info["publisher"] = raw_info["publisher"]
+
         return info
 
 if __name__ == "__main__":
