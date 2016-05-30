@@ -90,6 +90,44 @@ class Database(object):
         data = cursor.fetchone()
 
         merchant = Merchant(data[0], data[1], data[2])
-        return merchant # TODO: Return None if no merchant with given id
+        return merchant
 
-database = Database()
+    def getPerson(self, id):
+        """
+        Returns a person with given id
+        :param id: int - the id to search for
+        :return: if found: person with specific id, else None
+        """
+        cursor = self.connection.cursor()
+        cursor.execute("SELECT id, name, class FROM persons WHERE id = '?'", id)
+        length = len(cursor)
+        if length == 0:
+            return None
+
+        data = cursor.fetchone()
+        person = Person(data[0], data[1], data[2])
+        return person
+
+    def getBook(self, id):
+        """
+        Returns a book with given id
+        :param id: int the id to search for
+        :return: if found: book with given id, else None
+        """
+        cursor = self.connection.cursor()
+        cursor.execute("SELECT id, template_id, borrowed_by FROM books WHERE id = '?'", id)
+        length = len(cursor)
+        if length == 0:
+            return None
+
+        data = cursor.fetchone()
+        template = self.getBookTemplate(data[1])
+        if template == None:
+            print "book with none existing book_template in database..."
+            return None
+        borrowed_by = data[2]
+        if borrowed_by != None:
+            borrowed_by = self.getPerson(borrowed_by)
+
+        book = Book(data[0], template, borrowed_by)
+        return book
