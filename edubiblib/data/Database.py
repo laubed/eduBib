@@ -1,7 +1,8 @@
 import sqlite3
 from models.BookTemplate import BookTemplate
 from models.Merchant import Merchant
-
+from models.Person import Person
+from models.Book import Book
 
 class Database(object):
     """
@@ -22,7 +23,9 @@ class Database(object):
         cursor = self.connection.cursor()
         ### Check book_template table
         try:
+            print "Checking book_template table..."
             cursor.execute("SELECT 1 FROM book_template LIMIT 1");
+            print "found."
         except:
             print "book_template does not exist. Create it."
             self.connection.commit()
@@ -31,7 +34,9 @@ class Database(object):
 
         ### Check books table
         try:
+            print "Checking books table..."
             cursor.execute("SELECT 1 FROM books LIMIT 1");
+            print "found."
         except:
             print "books does not exist. Create it."
             self.connection.commit()
@@ -40,7 +45,9 @@ class Database(object):
 
         ### Check merchants table
         try:
+            print "Checking merchants table..."
             cursor.execute("SELECT 1 FROM merchants LIMIT 1")
+            print "found."
         except:
             print "merchants does not exist. Create it."
             self.connection.commit()
@@ -49,11 +56,13 @@ class Database(object):
 
         ### Check persons table
         try:
+            print "Checking persons table..."
             cursor.execute("SELECT 1 FROM persons LIMIT 1")
+            print "found."
         except:
             print "persons does not exist. Create it."
             self.connection.commit()
-            cursor.execute("CREATE TABLE persons (id INTEGER PRIMArY KEY AUTOINCREMENT NOT NULL, name STRING, klasse STRING)")
+            cursor.execute("CREATE TABLE persons (id INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, name STRING, class STRING)")
             self.connection.commit()
 
 
@@ -71,9 +80,9 @@ class Database(object):
 
         data = cursor.fetchone()
 
-        bookTemplate = BuchTemplate(data[0], data[1], data[2], data[3], data[5])
+        bookTemplate = BookTemplate(data[0], data[1], data[2], data[3], data[5])
         cursor.close()
-        return bookTemplate # TODO: Return None if no book template with given id
+        return bookTemplate
 
     def getMerchant(self, id):
         """

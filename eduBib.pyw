@@ -4,7 +4,6 @@ Main File
 from PIL import ImageTk, Image
 import Tkinter as tk
 
-
 if __name__ == "__main__":
     """
     Main entry. Start the application here
@@ -21,4 +20,3 @@ if __name__ == "__main__":
     root.eval('tk::PlaceWindow %s center' % root.winfo_pathname(root.winfo_id()))
     root.after(50, loadAll)
     root.mainloop()
-
