@@ -7,7 +7,7 @@ class Window(QtGui.QWidget):
     def __init__(self):
         
   
-        QtGui.QWidget.__init__(self) #parent = None,flags=QtCore.Qt.FramelessWindowHint)
+        QtGui.QWidget.__init__(self,parent = None,flags=QtCore.Qt.FramelessWindowHint)
         self.layout= QtGui.QVBoxLayout(self)
         self.setWindowTitle('eduBib')
         self.setGeometry(200,200,963,451)
