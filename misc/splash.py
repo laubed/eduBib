@@ -1,30 +1,34 @@
-#imports
 import sys
 import os
-from PyQt4 import QtGui
-import time 
-class Window(QtGui.QMainWindow):
-    def __init__(self):
-        QtGui.QWidget.__init__(self)
-        self.a = 50
-        self.b = 50
-        self.c = 500
-        self.d = 300
-        self.setGeometry(self.a,self.b,self.c,self.d)
-        self.setWindowTitle("eduBib")
-        self.background= QtGui.QLabel
-        self.setBackground("splash.png")
-        self.textbox =QtGui.QTextEdit()
-    def setBackground(self,address):
-        self.background.setGeometry(self.a,self.b,self.c,self.d)
-        self.background.setPixmap(os.getcwd()+"/splash.png")
+from PyQt4 import QtGui, QtCore
+
+class Window(QtGui.QWidget):
     
-    def setText(self,message):
-        self.textbox.append(message)
-if __name__=='__main__':
-    app = QtGui.QApplication(sys.argv)
-    window = window()
-    window.setText('Creating Databases')
-    window.show()
-    sys.exit(app.exec_())
+    def __init__(self):
         
+  
+        QtGui.QWidget.__init__(self) #parent = None,flags=QtCore.Qt.FramelessWindowHint)
+        self.layout= QtGui.QVBoxLayout(self)
+        self.setWindowTitle('eduBib')
+        self.setGeometry(200,200,963,451)
+        self.setWindowIcon(QtGui.QIcon('logo.png'))
+        self.pic = QtGui.QLabel(self)
+        text = None
+        self.pic.setPixmap(QtGui.QPixmap(os.getcwd()+"/splash.png"))
+        self.pic.setGeometry(0,0,963,451)
+
+        self.addText('Lade...')
+        self.show()
+    def run(self):
+        
+        app = QtGui.QApplication(sys.argv)
+        app.exec_()
+        self.show()
+    def addText(self,text):
+        self.text = QtGui.QLabel(text,self)
+        self.text.setFont(QtGui.QFont("Arial", 32))
+        self.text.setGeometry(300,300,200,200)
+        
+app = QtGui.QApplication(sys.argv)
+window = Window()
+window.run()
