@@ -7,8 +7,9 @@ class Window(QtGui.QWidget):
     
     def __init__(self):
         
-  
-        QtGui.QWidget.__init__(self)
+        
+        super(Window,self).__init__()
+       # QtGui.QWidget.__init__(self)
         self.layout =  QtGui.QVBoxLayout()
         self.setWindowTitle('eduBib')
         self.setGeometry(2000,200,500,182)
@@ -19,23 +20,18 @@ class Window(QtGui.QWidget):
         self.hwidth = 400
         self.hheight=157
         self.header.setGeometry(0,0,self.hwidth,self.hheight)
-        self.inven=self.addbutton('Inventory',100,10,0,158)
-        self.inven.clicked.connect(self.inven_function)
+        self.inven=self.addbutton('Inventory',100,10,0,158))
         self.borrow =self.addbutton('Borrow',100,10,100,158)
         self.admin=self.addbutton('Administration',100,10,200,158)
         self.acqui=self.addbutton('Acquisition',100,10,300,158)
         self.quit=self.addbutton('Quit',100,10,400,158)
+        self.quit.clicked.connect(self.quit_function)
         self.options = self.addbutton('Options',100,10,400,0)
         self.credits = self.addbutton('Credits',100,10,400,22)
         self.imprint = self.addbutton('Imprint',100,10,400,44)
         self.copyright = self.addbutton('Help',100,10,400,66)
         self.show()
-    def run(self):
-        
-        app = QtGui.QApplication(sys.argv)
-        app.exec_()
-        self.show()
-        sys.exit(app.exec_())
+  
     def addText(self,text):
         self.text = QtGui.QLabel(text,self)
         self.text.setFont(QtGui.QFont("Arial", 32))
@@ -47,11 +43,16 @@ class Window(QtGui.QWidget):
         
         button = QtGui.QPushButton(text,self)
         button.move(x,y)
-        button.setFixedWidth(width)
+        button.resize(width,23)
         self.layout.addWidget(button)
         return button
-    def inven_function(self):
-        print('Inventory Button')
-app = QtGui.QApplication(sys.argv)
-window = Window()
-window.run()
+    def quit_function(self):
+        sys.exit()
+def run():
+    app = QtGui.QApplication(sys.argv)
+ 
+    GUI = Window()
+    sys.exit(app.exec_())
+    
+        
+run()
