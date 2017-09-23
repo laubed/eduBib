@@ -1,3 +1,3 @@
-import data.Database
+import edubiblib.data.Database
 
-database = data.Database.Database()
+database = edubiblib.data.Database.Database()
